@@ -10,6 +10,7 @@
 */
 
 // CODE HERE
+
 let sayHelloButton = document.querySelector('#say-hello-button')
 
 // PROBLEM 2
@@ -20,8 +21,8 @@ let sayHelloButton = document.querySelector('#say-hello-button')
 */
 
 // CODE HERE
-function changeButton(e) {
-    e.preventDefault();
+
+function changeButton() {
     sayHelloButton.classList.add("dark-button")
 }
 
@@ -38,6 +39,11 @@ sayHelloButton.addEventListener("mouseover", changeButton)
 
 // CODE HERE
 
+function changeButtonBack() {
+    sayHelloButton.classList.remove("dark-button")
+}
+
+sayHelloButton.addEventListener("mouseout", changeButtonBack)
 
 // PROBLEM 4
 /*
@@ -51,7 +57,7 @@ const sayHello = () => {
     axios.get('http://localhost:3000/say-hello').then((res) => {
         let helloText = document.getElementById('hello-text');
         helloText.style.display = 'block';
-        helloText.style.backgroundColor = 'green';
+        // helloText.style.backgroundColor = 'green';
         helloText.textContent = res.data;
     })
 }
@@ -59,6 +65,7 @@ const sayHello = () => {
 
 // CODE HERE
 
+sayHelloButton.addEventListener('click', sayHello)
 
 // PROBLEM 5 
 /*
@@ -72,7 +79,21 @@ const sayHello = () => {
 */ 
 
 const ohMy = () => {
-    // YOUR CODE HERE
+    axios.get("http://localhost:3000/animals")
+        .then(res => {
+
+        function newP (input) {
+            let p = document.createElement('p');
+            p.textContent = input
+            document.querySelector('body').appendChild(p)
+        }
+
+        for (let animal of res.data){
+            newP(animal)  
+        }
+        console.log(res.data)
+        })
+        .catch(err => console.log(err));
 }
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
@@ -92,8 +113,20 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
 */
 
 const repeatMyParam = () => {
-    //YOUR CODE HERE
+    let param = "Nate is gr8"
+    
+    axios.get(`http://localhost:3000/repeat/${param}`)
+    .then(res => {
+        let repeatText = document.getElementById("repeat-text")
+        console.log(repeatText)
+        repeatText.textContent = res.data;
+        console.log(res.data)
+        })
+    .catch(err => console.log(err)); 
 }
+
+let repeatButton = document.querySelector("#repeat-button")
+repeatButton.addEventListener("click", repeatMyParam)
 
 // PROBLEM 7
 /*
@@ -117,6 +150,39 @@ const repeatMyParam = () => {
 
 // CODE HERE
 
+function qqqquery(){
+    let query = "Nate"
+    let query2 = "Rocks"
+    axios.get(`http://localhost:3000/query-test/?name=${query}`)
+    .then (res => {
+        console.log(res.data)
+    })
+    .catch (err => console.log(err));
+}
+
+document.querySelector("#query-button").addEventListener("click", qqqquery);
+
+function qqqqueryX2(){
+    let query = "Nate"
+    let query2 = "Rocks"
+    axios.get(`http://localhost:3000/query-test/?name=${query2}&${query}`)
+    .then (res => {
+        console.log(res.data)
+    })
+    .catch (err => console.error(err));
+}
+
+document.querySelector("#query-button").addEventListener("click", qqqqueryX2);
+
+function qqqqueryEmpty(){ 
+    axios.get(`http://localhost:3000/query-test`)
+    .then (res => {
+        console.log(res.data)
+    })
+    .catch (err => console.error(err));
+}
+
+document.querySelector("#query-button").addEventListener("click", qqqqueryEmpty);
 
 
 ////////////////
@@ -169,3 +235,37 @@ const repeatMyParam = () => {
 */
 
 // CODE HERE 
+let foodInput = document.querySelector('#food');
+let container = document.querySelector("#container");
+
+function clearCharacters() {
+    container.innerHTML = '';
+}
+
+function createFood(e){
+    e.preventDefault();
+    
+    let body = {
+        newFood: foodInput.value
+    }
+
+    axios.post(`http://localhost:3000/food`, body)
+        .then(res => {
+            clearCharacters()
+            function newP (input) {
+                let p = document.createElement('p');
+                p.textContent = input
+                document.querySelector('#container').appendChild(p)
+            }
+
+            for (let food of res.data){
+                newP(food)  
+            }
+            console.log(res.data)
+        })
+        .catch(err => console.log(err));
+
+    foodInput.value =''
+    }
+
+document.querySelector('form').addEventListener('submit', createFood)

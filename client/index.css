@@ -1,4 +1,29 @@
 .dark-button {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
+}
+
+#hello-text {
+  display: none;
+  font-size: xx-large;
+  background: linear-gradient(37deg, #ccffff, #ffcccc);
+  text-align: center;
+}
+
+#repeat-text {
+  display: block;
+  background: linear-gradient(37deg, #ffcccc, #ccffff);
+  color: black;
+  text-align: center;
+  font-size: xx-large;
+}
+
+form {
+  margin: 10px;
+}
+
+#container {
+  background: linear-gradient(37deg, #ccffff, #ffcccc);
+  text-align: center;
+  font-size: x-large;
 }
