@@ -10,7 +10,7 @@
 */
 
 // CODE HERE
-
+let sayHelloButton = document.querySelector('#say-hello-button')
 
 // PROBLEM 2
 /*
@@ -20,7 +20,12 @@
 */
 
 // CODE HERE
+function changeButton(e) {
+    e.preventDefault();
+    sayHelloButton.classList.add("dark-button")
+}
 
+sayHelloButton.addEventListener("mouseover", changeButton)
 
 // PROBLEM 3
 /*
